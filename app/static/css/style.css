@@ -1,0 +1,14 @@
+.banner1{
+    background-image: url('/static/img/phones.jpg');
+    background-size: cover;
+    height: 80vh;
+}
+
+.header-text{
+    display: flex;
+    justify-content: center;
+    padding-top: 20%;
+    left: 20rem;
+    top: 10rem;
+    color: white;
+}

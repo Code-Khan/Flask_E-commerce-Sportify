@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- <div class="banner">
+    <h1 class="header-text">PHONE BOOK</h1>
+</div> -->
+<div class="banner">
+    <h1 class="header-text">PHONE BOOK</h1>
+</div>
+
+{% if user.id == 1 %}
+    <h4>Hello, {{ user.name }}</h4>
+{% else %}
+    <h4>Add a contact to see the information here</h4>
+{% endif %}
+
+
+    {% for post in posts %}
+    <div class="card mb-5">
+        <div class="card-body">
+          <h5 class="card-title">{{ post.title }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">{{ post.author.name }}</h6>
+          <p class="card-text">{{ post.body }}</p>
+        </div>
+      </div>
+    {% endfor %}
+
+
+{% endblock content %}
