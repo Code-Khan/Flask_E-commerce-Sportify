@@ -7,10 +7,26 @@
                 <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="/phone_register">Add contacts</a>
+                <a class="nav-link active" href="/phone_register">Add-Contacts</a>
             </li>
             
             
+            
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/register">Register</a>
+                </li>
+                {% if current_user.is_authenticated %}
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/login">Login</a>
+                </li>
+                {% endif %}
             </ul>
         
     </div>

@@ -1,14 +1,14 @@
-.banner{
-    background-image: url('/static/img/phones.jpg');
-    background-size: cover;
-    height: 80vh;
+.banner {
+  background-image: url("/static/img/phones.jpg");
+  background-size: cover;
+  height: 80vh;
 }
 
-.header-text{
-    display: flex;
-    justify-content: center;
-    padding-top: 7%;
-    left: 20rem;
-    top: 10rem;
-    color: rgb(0, 0, 0);
+.header-text {
+  display: flex;
+  justify-content: center;
+  padding-top: 7%;
+  left: 20rem;
+  top: 10rem;
+  color: rgb(0, 0, 0);
 }
