@@ -4,11 +4,7 @@ from wtforms import validators
 from wtforms.validators import DataRequired, EqualTo, Email
 
 
-class UserInfoPhone(FlaskForm):
-    name = StringField('name', validators=[DataRequired()])
-    last_name = StringField('last_name', validators=[DataRequired()])
-    phone = StringField('phone', validators=[DataRequired()])
-    submit = SubmitField()
+
 
 
 class UserInfoForm(FlaskForm):
@@ -27,7 +23,18 @@ class LoginForm(FlaskForm):
     submit = SubmitField()
 
 
-# class PostForm(FlaskForm):
-#     title = StringField('Title', validators=[DataRequired()])
-#     body = StringField('Body', validators=[DataRequired()])
-#     submit = SubmitField()
+class PostForm(FlaskForm):
+    name = StringField('name')
+    last_name = StringField('last_name')
+    phone = StringField('phone', validators=[DataRequired()])
+    submit = SubmitField()
+
+
+
+
+
+
+# --------------------------------------------------------------------------------------------------------
+
+class DeletePostForm(FlaskForm):
+    submit = SubmitField()

@@ -3,26 +3,34 @@
         
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active" href="/phone_register">Add-Contacts</a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{ url_for('index') }}">Home</a>
+                </li>
+            {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/phone_register">Add-Contacts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/mycontacts">My Contacts</a>
+                </li>
+                    
+                {% endif %}
+            
             
             
             
             </ul>
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="/register">Register</a>
-                </li>
+                
                 {% if current_user.is_authenticated %}
                 
                 <li class="nav-item">
                     <a class="nav-link" href="/logout">Logout</a>
                 </li>
                 {% else %}
+                <li class="nav-item">
+                    <a class="nav-link active" href="/register">Register</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="/login">Login</a>
                 </li>

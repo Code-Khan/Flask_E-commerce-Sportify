@@ -3,9 +3,9 @@ from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_mail import Message
 from werkzeug.security import check_password_hash
-from app.forms import UserInfoForm, LoginForm, UserInfoPhone
-from app.models import User, UserPhone, Post
-# from app.forms import PostForm
+from app.forms import UserInfoForm, LoginForm,DeletePostForm
+from app.models import User, Post
+from app.forms import PostForm
 
 
 @app.route('/')
@@ -19,35 +19,6 @@ def index():
     return render_template('index.html', **context)
 
 
-@app.route('/phone_register', methods=['GET', 'POST'])
-@login_required
-def registerphone():
-    title = 'POHONE_REGISTER'
-    form = UserInfoPhone()
-    if request.method == 'POST' and form.validate_on_submit():
-        name = form.name.data
-        last_name = form.last_name.data
-        phone = form.phone.data
-        user_id = current_user.id
-        # print(username, email, password)
-        # Check if username/email already exists
-        existing_user = UserPhone.query.filter((UserPhone.name == name) | (
-            UserPhone.last_name == last_name) | (UserPhone.phone == phone)).all()
-        if existing_user:
-            flash(
-                'That name , last name or phone already exists. Please try again', 'danger')
-            return redirect(url_for('phone_register'))
-
-        new_user = UserPhone(name, last_name, phone)
-        db.session.add(new_user)
-        db.session.commit()
-
-        flash(
-            f'Thank you {name} {last_name} your contact has been saved!', 'success')
-        return redirect(url_for('index'))
-
-    return render_template('phone_register.html', title=title, form=form)
-
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -57,8 +28,6 @@ def register():
         username = form.username.data
         email = form.email.data
         password = form.password.data
-        # print(username, email, password)
-        # Check if username/email already exists
         existing_user = User.query.filter(
             (User.username == username) | (User.email == email)).all()
         if existing_user:
@@ -107,23 +76,86 @@ def logout():
     return redirect(url_for('index'))
 
 
-# @app.route('/createpost', methods=['GET', 'POST'])
-# @login_required
-# def createpost():
-#     title = 'CREATE POST'
-#     form = PostForm()
-#     if request.method == 'POST' and form.validate_on_submit():
-#         post_title = form.title.data
-#         post_body = form.body.data
-#         user_id = current_user.id
+@app.route('/phone_register', methods=['GET', 'POST'])
+@login_required
+def createpost():
+    title = 'CREATE POST'
+    form = PostForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        post_name = form.name.data
+        post_last_name = form.last_name.data
+        post_phone = form.phone.data
+        user_id = current_user.id
 
-#         new_post = Post(post_title, post_body, user_id)
+        new_post = Post(post_name, post_last_name, post_phone, user_id)
 
-#         db.session.add(new_post)
-#         db.session.commit()
+        db.session.add(new_post)
+        db.session.commit()
 
-#         flash(f"You have created a post: {post_title}", 'info')
+        flash(f"You have entered a phone number for: {post_name}", 'info')
 
-#         return redirect(url_for('index'))
+        return redirect(url_for('index'))
 
-#     return render_template('createpost.html', title=title, form=form)
+    return render_template('phone_register.html', title=title, form=form)
+
+
+# -----------------------------------------------------------------------------------------------
+
+@app.route('/mycontacts')
+@login_required
+def myposts():
+    title = 'MY POSTS'
+    posts = Post.query.filter_by(user_id=current_user.id).all()
+    return render_template('mycontacts.html', title=title, posts=posts)
+
+
+@app.route('/posts/<int:post_id>')
+def post_detail(post_id):
+    post = Post.query.get_or_404(post_id)
+    context = {
+        'post': post,
+        'name': post.name,
+        'form': DeletePostForm()
+    }
+    return render_template('post_detail.html', **context)
+
+
+@app.route('/posts/update/<int:post_id>', methods=['GET', 'POST'])
+@login_required
+def post_update(post_id):
+    post = Post.query.get_or_404(post_id)
+    title = f'UPDATE {post.name}'
+    if post.author.id != current_user.id:
+        flash("You cannot update another user's post. Who do you think you are?", "warning")
+        return redirect(url_for('mycontacts'))
+    update_form = PostForm()
+    if request.method == 'POST' and update_form.validate_on_submit():
+        post.name = update_form.name.data
+        post.last_name = update_form.last_name.data
+        post.phone = update_form.phone.data
+
+        # post.name = post.name
+        # post.last_name = post.last_name
+        # post.phone = post.phone
+
+        db.session.commit()
+
+        return redirect(url_for('post_detail', post_id=post.id))
+
+    return render_template('post_update.html', title=title, post=post, form=update_form)
+
+
+@app.route('/posts/delete/<int:post_id>', methods=['POST'])
+@login_required
+def post_delete(post_id):
+    post = Post.query.get_or_404(post_id)
+    if post.author.id != current_user.id:
+        flash("You cannot delete another user's post. Who do you think you are?", "warning")
+        return redirect(url_for('mycontacts'))
+    form = DeletePostForm()
+    if form.validate_on_submit():
+        db.session.delete(post)
+        db.session.commit()
+        flash(f'{post.name} has been deleted', 'info')
+        return redirect(url_for('index'))
+    return redirect(url_for('index'))

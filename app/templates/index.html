@@ -9,21 +9,25 @@
 </div>
 
 {% if current_user.is_authenticated %}
-    <h4>Hello, {{ current_user.username }}</h4>
+
+    <h4>Welcome, {{ current_user.username }}!! &nbsp You can use our phone book now.</h4><br>
 {% else %}
-    <h4>Please register to enjoy our app!</h4>
+<div >
+    <h4>Please register to enter your contacts!</h4><br>
+</div>
+    
+
 {% endif %}
 
 
-    <!-- {% for post in posts %}
+    {% for post in posts %}
     <div class="card mb-5">
         <div class="card-body">
-          <h5 class="card-title">{{ post.title }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{ post.author.name }}</h6>
-          <p class="card-text">{{ post.body }}</p>
+          <h5 class="card-title">{{ "Name:" }} {{ post.name }} {{ post.last_name}}</h5>
+          <p class="card-text">{{ "Number:" }} {{ post.phone }}</p>
         </div>
       </div>
-    {% endfor %} -->
+    {% endfor %}
 
 
 {% endblock content %}
