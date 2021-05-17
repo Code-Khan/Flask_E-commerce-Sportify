@@ -1,33 +1,80 @@
 {% extends 'base.html' %}
+  
 
 {% block content %}
-<!-- <div class="banner">
-    <h1 class="header-text">PHONE BOOK</h1>
-</div> -->
-<div class="banner">
-    <h1 class="header-text">PHONE BOOK</h1>
-</div>
 
 {% if current_user.is_authenticated %}
 
-    <h4>Welcome, {{ current_user.username }}!! &nbsp You can use our phone book now.</h4><br>
+    <h4>Welcome, {{ current_user.username }}!! &nbsp Seasonal gear now in stock.</h4><br>
 {% else %}
 <div >
-    <h4>Please register to use our phone book!</h4><br>
+    <h4>Please register to shop in our store!</h4><br>
 </div>
     
 
 {% endif %}
 
 
-    {% for post in posts %}
-    <div class="card mb-5">
-        <div class="card-body">
-          <h5 class="card-title">{{ "Name:" }} {{ post.name }} {{ post.last_name}}</h5>
-          <p class="card-text">{{ "Number:" }} {{ post.phone }}</p>
-        </div>
-      </div>
-    {% endfor %}
+        <!-- Gallery -->
+<div class="row">
+    <div class="col-lg-4 col-md-12 mb-4 mb-lg-0">
+      <img
+        src="/static/images/hori1.jpg"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt=""
+      />
+  
+      <img
+        src="/static/images/vertical1.jpg"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt=""
+      />
+    </div>
+  
+    <div class="col-lg-4 mb-4 mb-lg-0">
+      <img
+        src="/static/images/vertical2.jpg"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt=""
+      />
+  
+      <img
+        src="/static/images/hori2.jpg"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt=""
+      />
+    </div>
+  
+    <div class="col-lg-4 mb-4 mb-lg-0">
+      <img
+        src="/static/images/hori3.jpg"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt=""
+      />
+  
+      <img
+        src="/static/images/vertical3.jpg"
+        class="w-100 shadow-1-strong rounded mb-4"
+        alt=""
+      />
+    </div>
+  </div>
+  <!-- Gallery -->
+
+        
+    </div>
+
+</div>
 
 
+
+
+
+
+
+
+
+
+{% include 'footer.html' %}   
 {% endblock content %}
+

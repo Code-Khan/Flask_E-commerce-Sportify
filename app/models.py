@@ -46,3 +46,52 @@ class Post(db.Model):
 
 
 # ----------------------------------------------------------------------------------------------------
+
+
+class Products(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), nullable=False)
+    description= db.Column(db.String(30), nullable=False)
+    price = db.Column(db.Integer(), nullable=False)
+    category = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    image= db.Column(db.String(30), nullable=False)
+
+
+    def __init__(self,  name, description,price,category, image):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.category = category
+        self.image = image
+
+    def __repr__(self):
+        return f'<Post | {self.name}>'
+
+
+
+class ShoppingCart(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(35), nullable=False)
+    description= db.Column(db.String(30), nullable=False)
+    price = db.Column(db.Integer(), nullable=False)
+    category = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    image= db.Column(db.String(30), nullable=False)
+
+    def __init__(self,  name, description,price,category,image):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.category = category
+        self.image = image
+
+    def __repr__(self):
+        return f'<Post | {self.name}>'    
+
+    
+    @classmethod
+    def gettotal(cls):
+        produc = ShoppingCart.query.all()
+        total=0
+        for prod in produc:
+            total+=prod.price 
+        return total     

@@ -3,25 +3,31 @@
 
 {% block content %}
 
-<h3>Login</h3>
 
-<form action="" method="POST">
-    {{ form.hidden_tag() }}
-    <div class="form-group">
-        <fieldset>
-            {{ form.username.label }}
-            {{ form.username(class='form-control', placeholder='Username') }}
-        </fieldset>
-        <fieldset>
-            {{ form.password.label }}
-            {{ form.password(class='form-control', placeholder='Password') }}
-        </fieldset>
-        <fieldset>
-            {{ form.remember_me }}
-            {{ form.remember_me.label }}
-        </fieldset>
-        {{ form.submit(class='btn btn-primary') }}
+<div class="row position-relative">
+    <div class="col-3 position-absolute top-0 end-0">
+        <h3>Login</h3>
+        <form action="" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <fieldset>
+                    {{ form.username.label }}
+                    {{ form.username(class='form-control', placeholder='') }}
+                </fieldset>
+                <fieldset>
+                    {{ form.password.label }}
+                    {{ form.password(class='form-control', placeholder='') }}
+                </fieldset>
+                <fieldset>
+                    {{ form.remember_me }}
+                    {{ form.remember_me.label }}
+                </fieldset>
+                {{ form.submit(class='btn btn-primary') }}
+            </div>
+        </form>
     </div>
-</form>
+</div>
+
 
 {% endblock content %}
+

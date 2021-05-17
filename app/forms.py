@@ -38,3 +38,7 @@ class PostForm(FlaskForm):
 
 class DeletePostForm(FlaskForm):
     submit = SubmitField()
+
+
+class Add(FlaskForm):
+    Add_to_Cart = SubmitField()    
